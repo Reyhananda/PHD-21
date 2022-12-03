@@ -2,46 +2,62 @@
   <head>
     <title>PHD-21 Control</title>
     <link rel="stylesheet" href="./style.css" />
+    <style>
+      body {
+        background-image: url("https://img.freepik.com/premium-vector/chicken-hen-farm-habitat-background-flat-design-cartoon-farm-animals-birds_126523-643.jpg?w=2000");
+        background-color: #cccccc;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
   </head>
   <body>
     <div style="justify-content: center; display: flex; margin-top: 30px">
       <img src="https://i.postimg.cc/7LQh3CW8/PHD-21-Logo.png" alt="Logo" />
     </div>
-    <div style="justify-content: center; display: flex; margin-top: 30px">
+    <div
+      style="
+        justify-content: center;
+        display: flex;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      "
+    >
       <img src="{{ url_for('video') }}" />
     </div>
-    <form id="slider" method="POST" action="test" style="text-align: center">
-      <p>
-        Pan
-        <input
-          type="range"
-          id="slider1"
-          min="90"
-          max="270"
-          value="90"
-          name="slider1"
-          style="cursor: pointer"
-        />
-      </p>
-      <p>
-        Tilt
-        <input
-          type="range"
-          id="slider2"
-          min="100"
-          max="180"
-          value="90"
-          name="slider2"
-          style="cursor: pointer"
-        />
-      </p>
-      <input type="submit" value="submit" />
-    </form>
+    <div>
+      <form id="slider" method="POST" action="test" style="text-align: center">
+        <p>
+          Pan
+          <input
+            type="range"
+            id="slider1"
+            min="90"
+            max="270"
+            value="90"
+            name="slider1"
+            style="cursor: pointer"
+          />
+        </p>
+        <p>
+          Tilt
+          <input
+            type="range"
+            id="slider2"
+            min="100"
+            max="180"
+            value="90"
+            name="slider2"
+            style="cursor: pointer"
+          />
+        </p>
+      </form>
+    </div>
   </body>
   <script>
     function submitServo(event) {
       event.preventDefault();
-      fetch("http://127.0.0.1:5000/test", {
+      fetch("http://192.168.43.252:5000/test", {
         method: "POST",
         body: new FormData(slider),
       });
@@ -51,7 +67,7 @@
     var slider2 = document.querySelector("#slider2");
     slider1.addEventListener("change", (event) => {
       var slider1Val = event.target.value;
-      fetch("http://127.0.0.1:5000/test", {
+      fetch("http://10.10.55.95:8001/test", {
         method: "POST",
         body: new FormData(slider),
       });
@@ -59,7 +75,7 @@
 
     slider2.addEventListener("change", (event) => {
       var slider2Val = event.target.value;
-      fetch("http://127.0.0.1:5000/test", {
+      fetch("http://10.10.55.95:8001/test", {
         method: "POST",
         body: new FormData(slider),
       });

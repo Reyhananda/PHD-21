@@ -1,11 +1,13 @@
 ## PROPERTY OF PHD-21 ##
-
 from flask import Flask, render_template, request, Response
 from camera import Video
 import cv2
+
+
 # import math 
 # from time import sleep
 # from servo import servo_bawah, servo_atas
+
 
 app=Flask(__name__)
 

@@ -6,9 +6,11 @@ from telegram import running
 import time, datetime
 from dotenv import load_dotenv
 import os
+import sqlite3
 
 load_dotenv() # Environment Variables
 
+currentdirectory = os.path.dirname(os.path.abspath(__file__))
 
 now = datetime.datetime.now() #libraries
 
@@ -94,6 +96,11 @@ class Video(object):
                     # running()
                     bot.sendPhoto(chat_id, (open('Ayam Sakit.jpg', "rb")))
                     bot.sendMessage(chat_id, str("Terdeteksi Ayam Sakit,")+str("\nPukul: ")+str(now.hour)+str(":")+str(now.minute)+str(" WIB")+ str("\nTanggal: ")+str(now.day)+ str(" ")+ str(now.strftime("%B")) + str(" ")+ str(now.year))
+                    connection = sqlite3.connect(currentdirectory +"\data.db")
+                    cursor = connection.cursor()
+                    query1 = 'INSERT INTO history_scan (status) VALUES ("sakit")'
+                    cursor.execute(query1)
+                    connection.commit()
  
 
         ret,jpg=cv2.imencode('.jpg',frame)
