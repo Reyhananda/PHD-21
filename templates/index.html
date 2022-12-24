@@ -9,6 +9,123 @@
         background-repeat: no-repeat;
         background-size: cover;
       }
+      .button-21 {
+        align-items: center;
+        appearance: none;
+        background-color: #3eb2fd;
+        background-image: linear-gradient(1deg, #4f58fd, #149bf3 99%);
+        background-size: calc(100% + 20px) calc(100% + 20px);
+        border-radius: 100px;
+        border-width: 0;
+        box-shadow: none;
+        box-sizing: border-box;
+        color: #ffffff;
+        cursor: pointer;
+        display: inline-flex;
+        font-family: CircularStd, sans-serif;
+        font-size: 1rem;
+        height: auto;
+        justify-content: center;
+        line-height: 1.5;
+        padding: 6px 20px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.2s, background-position 0.2s;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: top;
+        white-space: nowrap;
+      }
+
+      .button-21:active,
+      .button-21:focus {
+        outline: none;
+      }
+
+      .button-21:hover {
+        background-position: -20px -20px;
+      }
+
+      .button-21:focus:not(:active) {
+        box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 0.125em;
+      }
+
+      input[type="range"] {
+        margin: auto;
+        -webkit-appearance: none;
+        position: relative;
+        overflow: hidden;
+        height: 40px;
+        width: 200px;
+        cursor: pointer;
+        border-radius: 0; /* iOS */
+      }
+
+      ::-webkit-slider-runnable-track {
+        background: #ddd;
+      }
+
+      /*
+ * 1. Set to 0 width and remove border for a slider without a thumb
+ * 2. Shadow is negative the full width of the input and has a spread 
+ *    of the width of the input.
+ */
+      ::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 20px; /* 1 */
+        height: 40px;
+        background: #fff;
+        box-shadow: -200px 0 0 200px dodgerblue; /* 2 */
+        border: 2px solid #999; /* 1 */
+      }
+
+      ::-moz-range-track {
+        height: 40px;
+        background: #ddd;
+      }
+
+      ::-moz-range-thumb {
+        background: #fff;
+        height: 40px;
+        width: 20px;
+        border: 3px solid #999;
+        border-radius: 0 !important;
+        box-shadow: -200px 0 0 200px dodgerblue;
+        box-sizing: border-box;
+      }
+
+      ::-ms-fill-lower {
+        background: dodgerblue;
+      }
+
+      ::-ms-thumb {
+        background: #fff;
+        border: 2px solid #999;
+        height: 40px;
+        width: 20px;
+        box-sizing: border-box;
+      }
+
+      ::-ms-ticks-after {
+        display: none;
+      }
+
+      ::-ms-ticks-before {
+        display: none;
+      }
+
+      ::-ms-track {
+        background: #ddd;
+        color: transparent;
+        height: 40px;
+        border: none;
+      }
+
+      ::-ms-tooltip {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -25,8 +142,8 @@
     >
       <img src="{{ url_for('video') }}" />
     </div>
-    <div>
-      <form id="slider" method="POST" action="test" style="text-align: center">
+    <div style="text-align: center">
+      <form id="slider" method="POST" action="test">
         <p>
           Pan
           <input
@@ -52,12 +169,15 @@
           />
         </p>
       </form>
+      <a href="/chart">
+        <button class="button-21" role="button">Statistik Ayam Sakit</button>
+      </a>
     </div>
   </body>
   <script>
     function submitServo(event) {
       event.preventDefault();
-      fetch("http://192.168.43.252:5000/test", {
+      fetch("http://192.168.0.188:5000/test", {
         method: "POST",
         body: new FormData(slider),
       });
@@ -67,7 +187,7 @@
     var slider2 = document.querySelector("#slider2");
     slider1.addEventListener("change", (event) => {
       var slider1Val = event.target.value;
-      fetch("http://10.10.55.95:8001/test", {
+      fetch("http://192.168.0.188:8001/test", {
         method: "POST",
         body: new FormData(slider),
       });
@@ -75,7 +195,7 @@
 
     slider2.addEventListener("change", (event) => {
       var slider2Val = event.target.value;
-      fetch("http://10.10.55.95:8001/test", {
+      fetch("http://192.168.0.188:8001/test", {
         method: "POST",
         body: new FormData(slider),
       });

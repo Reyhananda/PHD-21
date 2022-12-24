@@ -1,0 +1,15 @@
+{
+  "name": "phd-21",
+  "version": "1.0.0",
+  "description": "Poultry Health Detector with Website Interface & Telegram Bot Notification",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chart.js": "^4.0.1"
+  }
+}

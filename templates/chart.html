@@ -1,0 +1,124 @@
+<html lang="en">
+  <head>
+    <title>PHD-21 Chart</title>
+    <style>
+      body {
+        background-image: url("https://img.freepik.com/premium-vector/chicken-hen-farm-habitat-background-flat-design-cartoon-farm-animals-birds_126523-643.jpg?w=2000");
+        background-color: #cccccc;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .button-33 {
+        background-color: #c2fbd7;
+        border-radius: 100px;
+        box-shadow: rgba(44, 187, 99, 0.2) 0 -25px 18px -14px inset,
+          rgba(44, 187, 99, 0.15) 0 1px 2px, rgba(44, 187, 99, 0.15) 0 2px 4px,
+          rgba(44, 187, 99, 0.15) 0 4px 8px, rgba(44, 187, 99, 0.15) 0 8px 16px,
+          rgba(44, 187, 99, 0.15) 0 16px 32px;
+        color: green;
+        cursor: pointer;
+        display: inline-block;
+        font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto,
+          sans-serif;
+        padding: 7px 20px;
+        text-align: center;
+        text-decoration: none;
+        transition: all 250ms;
+        border: 0;
+        font-size: 16px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+      }
+
+      .button-33:hover {
+        box-shadow: rgba(44, 187, 99, 0.35) 0 -25px 18px -14px inset,
+          rgba(44, 187, 99, 0.25) 0 1px 2px, rgba(44, 187, 99, 0.25) 0 2px 4px,
+          rgba(44, 187, 99, 0.25) 0 4px 8px, rgba(44, 187, 99, 0.25) 0 8px 16px,
+          rgba(44, 187, 99, 0.25) 0 16px 32px;
+        transform: scale(1.05) rotate(-1deg);
+      }
+    </style>
+  </head>
+  <body>
+    <h1
+      style="
+        margin-top: 100px;
+        margin-bottom: 0;
+        text-align: center;
+        font-weight: bold;
+        color: rgb(152, 16, 66);
+        font-size: 100px;
+      "
+    >
+      Data Sakit Minggu Ini
+    </h1>
+    <div style="display: flex; justify-items: center; margin-top: 200px">
+      <canvas
+        style="
+          padding-top: 0px;
+          margin: 0 auto 40px auto;
+          width: 1200px;
+          background-color: ghostwhite;
+        "
+        id="acquisitions"
+      ></canvas>
+    </div>
+    <div style="text-align: center">
+      <a href="/">
+        <button class="button-33" role="button">Back To Home</button>
+      </a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+
+    <script>
+      if (!window.moment) {
+        document.write('<script src="assets/plugins/moment/moment.min.js"/>');
+      }
+      const moment = window.moment;
+
+      const history = JSON.parse("{{ data }}".replaceAll(`'`, `"`));
+
+      let data = [
+        { day: "Monday" },
+        { day: "Tuesday" },
+        { day: "Wednesday" },
+        { day: "Thursday" },
+        { day: "Friday" },
+        { day: "Saturday" },
+        { day: "Sunday" },
+      ];
+
+      data = data.map((item) => {
+        const firstDayOfWeek = moment().day(1);
+        const lastDayOfWeek = moment().day(7);
+
+        const filteredHistory = history.filter(
+          (val) =>
+            moment(val.created_at).format("dddd") === item.day &&
+            moment(val.created_at).isBefore(lastDayOfWeek) &&
+            moment(val.created_at).isAfter(firstDayOfWeek)
+        );
+
+        return { ...item, count: filteredHistory.length };
+      });
+      new Chart(document.getElementById("acquisitions"), {
+        type: "bar",
+        data: {
+          labels: data.map((row) => row.day),
+          datasets: [
+            {
+              label: "Total Sakit Per Hari",
+              data: data.map((row) => row.count),
+              borderColor: "#fffff",
+              backgroundColor: "#FF6384",
+            },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>

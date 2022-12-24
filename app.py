@@ -1,8 +1,13 @@
 ## PROPERTY OF PHD-21 ##
-from flask import Flask, render_template, request, Response
+from flask import Flask, render_template, request, Response, jsonify
+from flask import Markup
 from camera import Video
 import cv2
+import sqlite3
+import os
+import json
 
+currentdirectory = os.path.dirname(os.path.abspath(__file__))
 
 # import math 
 # from time import sleep
@@ -52,7 +57,23 @@ def video():
 # @app.route('/capture', methods=["POST"] )
 # def capture():
 
+@app.route('/chart')
+def chart():
+    connection = sqlite3.connect(currentdirectory +"\data.db")
+    cursor = connection.cursor()
+    query1 = 'SELECT * FROM history_scan'
+    result = cursor.execute(query1).fetchall()
+    # connection.commit()
+    # result = dict((y,x) for x, y in result)
+    print(result)
+    res = []
+    for item in result:
+        res.append({
+            "created_at": item[0],
+            "status": item[1]
+        })
 
+    return render_template('chart.html', data=Markup(res))
 
 
 
